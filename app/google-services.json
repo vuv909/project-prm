@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "84449194274",
+    "project_id": "newpetshop-a481a",
+    "storage_bucket": "newpetshop-a481a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84449194274:android:c3ba7939fb7a7fb264757b",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdXo0L5VShU6Z9Jb-2u5hJAAHFoiJl2w0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84449194274:android:31f09145f937201264757b",
+        "android_client_info": {
+          "package_name": "com.khanhsp.loginBasic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdXo0L5VShU6Z9Jb-2u5hJAAHFoiJl2w0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
