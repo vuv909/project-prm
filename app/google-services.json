@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "84449194274",
-    "project_id": "newpetshop-a481a",
-    "storage_bucket": "newpetshop-a481a.appspot.com"
+    "project_number": "1014862150821",
+    "project_id": "pet-shop-2-afaa9",
+    "storage_bucket": "pet-shop-2-afaa9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:84449194274:android:c3ba7939fb7a7fb264757b",
+        "mobilesdk_app_id": "1:1014862150821:android:66c8ad4b09a4e870b1214c",
         "android_client_info": {
           "package_name": "com.example.myapplication"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDdXo0L5VShU6Z9Jb-2u5hJAAHFoiJl2w0"
+          "current_key": "AIzaSyASCzIqP0bZi3YdTcFY1C-etkKEVn1_aBI"
         }
       ],
       "services": {
@@ -26,15 +26,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:84449194274:android:31f09145f937201264757b",
+        "mobilesdk_app_id": "1:1014862150821:android:4485907b3fe5d776b1214c",
         "android_client_info": {
-          "package_name": "com.khanhsp.loginBasic"
+          "package_name": "com.example.petshop"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDdXo0L5VShU6Z9Jb-2u5hJAAHFoiJl2w0"
+          "current_key": "AIzaSyASCzIqP0bZi3YdTcFY1C-etkKEVn1_aBI"
         }
       ],
       "services": {
