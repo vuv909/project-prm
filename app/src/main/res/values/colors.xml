@@ -4,4 +4,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pink">#E58EEE</color>
     <color name="green">#00FF00</color>
+    <color name="my_primary">#FF24D3FE</color>
+    <color name="my_primary1">#D0E9EF</color>
+    <color name="my_primary2">#047cbc</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="delete">#C90422</color>
+    <color name="purple">#8692f7</color>
+
 </resources>
