@@ -1,5 +1,5 @@
 package com.example.myapplication.activity;
-
+import com.example.myapplication.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.example.myapplication.R;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,7 +57,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         bindingView();
 
-       bindingAction();
+        bindingAction();
 
 
     }
