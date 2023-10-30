@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.ShowAllAdapter;
-import com.example.myapplication.models.ShowAllModel;
+import com.example.myapplication.models.Product;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,11 +24,11 @@ import java.util.List;
 
 public class ShowAllAcitvity extends AppCompatActivity {
 
-    private ShowAllModel showAllModel;
+    private Product showAllModel;
 
     private ShowAllAdapter showAllAdapter;
 
-    private List<ShowAllModel> showAllModels;
+    private List<Product> showAllModels;
 
     FirebaseFirestore db;
 
@@ -60,7 +60,7 @@ public class ShowAllAcitvity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    ShowAllModel productNew = document.toObject(ShowAllModel.class);
+                                    Product productNew = document.toObject(Product.class);
                                     showAllModels.add(productNew);
                                     showAllAdapter.notifyDataSetChanged();
                                 }
@@ -78,7 +78,7 @@ public class ShowAllAcitvity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    ShowAllModel productNew = document.toObject(ShowAllModel.class);
+                                    Product productNew = document.toObject(Product.class);
                                     showAllModels.add(productNew);
                                     showAllAdapter.notifyDataSetChanged();
                                 }

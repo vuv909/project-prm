@@ -38,14 +38,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
             Glide.with(context).load(categoryList.get(position).getImg()).placeholder(R.drawable.advert1).into(holder.catImage);
-            holder.catImage.setImageResource(R.drawable.advert1); // Set a default image
             holder.catName.setText(categoryList.get(position).getName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int clickPosition = holder.getAdapterPosition();
                     Intent intent = new Intent(context , ShowAllAcitvity.class);
-                    intent.putExtra("type",categoryList.get(clickPosition).getType());
+                    intent.putExtra("type",String.valueOf(categoryList.get(clickPosition).getId()));
                     context.startActivity(intent);
                 }
             });

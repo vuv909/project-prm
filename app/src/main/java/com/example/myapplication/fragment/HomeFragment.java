@@ -11,12 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +26,8 @@ import com.example.myapplication.adapter.CategoryAdapter;
 import com.example.myapplication.adapter.ListProductAdapter;
 import com.example.myapplication.adapter.NewProductAdapter;
 import com.example.myapplication.models.Category;
-import com.example.myapplication.models.NewProducts;
-import com.example.myapplication.models.ProductModel;
+
+import com.example.myapplication.models.Product;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,14 +47,14 @@ public class HomeFragment extends Fragment {
 
     //Category recycleview
     List<Category> categoryList;
-    List<NewProducts> productsList;
+    List<Product> productsList;
     CategoryAdapter categoryAdapter;
     NewProductAdapter productAdapter;
     RecyclerView catRecyclerView;
     RecyclerView newProductRecycleview;
 
 
-    List<ProductModel> productModelList;
+    List<Product> productModelList;
     RecyclerView listProductRecycleview;
     ListProductAdapter listProductAdapter;
     //
@@ -152,20 +149,20 @@ public class HomeFragment extends Fragment {
                 });
 
 
-        //New products
+        //Top sellert product
         newProductRecycleview.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
         productsList = new ArrayList<>();
         productAdapter = new NewProductAdapter(getContext(),productsList);
         newProductRecycleview.setAdapter(productAdapter);
 
-        db.collection("NewProducts")
+        db.collection("Product")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                NewProducts productNew = document.toObject(NewProducts.class);
+                                Product productNew = document.toObject(Product.class);
                                 productsList.add(productNew);
                                 productAdapter.notifyDataSetChanged();
                             }
@@ -181,14 +178,14 @@ public class HomeFragment extends Fragment {
         listProductAdapter = new ListProductAdapter(getContext(),productModelList);
         listProductRecycleview.setAdapter(listProductAdapter);
 
-        db.collection("ListProducts")
+        db.collection("Product")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                ProductModel productNew = document.toObject(ProductModel.class);
+                                Product productNew = document.toObject(Product.class);
                                 productModelList.add(productNew);
                                 listProductAdapter.notifyDataSetChanged();
                             }

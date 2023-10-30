@@ -14,16 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.ProductDetailActivity;
-import com.example.myapplication.models.ProductModel;
+import com.example.myapplication.models.Product;
 
+
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ListProductAdapter extends RecyclerView.Adapter<ListProductAdapter.ViewHolder> {
 
     private Context context;
-    private List<ProductModel> listproduct;
+    private List<Product> listproduct;
 
-    public ListProductAdapter(Context context, List<ProductModel> listproduct) {
+    public ListProductAdapter(Context context, List<Product> listproduct) {
         this.context = context;
         this.listproduct = listproduct;
     }
@@ -37,8 +40,23 @@ public class ListProductAdapter extends RecyclerView.Adapter<ListProductAdapter.
     @Override
     public void onBindViewHolder(@NonNull ListProductAdapter.ViewHolder holder, int position) {
         Glide.with(context).load(listproduct.get(position).getImg()).into(holder.view);
-        holder.name.setText(listproduct.get(position).getName());
-        holder.price.setText(String.valueOf(listproduct.get(position).getPrice()));
+
+        String text = listproduct.get(position).getName();
+        if (text.length() > 20) {
+
+            holder.name.setText(text.substring(0, 20)+"...");
+        } else {
+
+            holder.name.setText(text);
+        }
+
+        double price = listproduct.get(position).getPrice();
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formattedPrice = format.format(price);
+
+        holder.price.setText(formattedPrice);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
