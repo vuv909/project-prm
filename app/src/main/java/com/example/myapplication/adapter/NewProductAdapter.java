@@ -14,16 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.ProductDetailActivity;
-import com.example.myapplication.models.NewProducts;
+import com.example.myapplication.models.Product;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.ViewHolder> {
 
     private Context context;
-    private List<NewProducts> productsList;
+    private List<Product> productsList;
 
-    public NewProductAdapter(Context context, List<NewProducts> productsList) {
+    public NewProductAdapter(Context context, List<Product> productsList) {
         this.context = context;
         this.productsList = productsList;
     }
@@ -37,11 +39,28 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull NewProductAdapter.ViewHolder holder, int position) {
 
-            Glide.with(context).load(productsList.get(position).getImg()).placeholder(R.drawable.advert1).into(holder.newImg);
-            holder.newImg.setImageResource(R.drawable.advert1); // Set a default image
-            holder.newName.setText(productsList.get(position).getName());
-            holder.newPrice.setText(String.valueOf(productsList.get(position).getPrice()));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            Glide.with(context).load(productsList.get(position).getImg()).into(holder.newImg);
+            String text = productsList.get(position).getName();
+             if (text.length() > 20) {
+
+            holder.newName.setText(text.substring(0, 20)+"...");
+            } else {
+
+            holder.newName.setText(text);
+            }
+
+
+             //price
+            double price = productsList.get(position).getPrice();
+
+
+            NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            String formattedPrice = format.format(price);
+
+
+             holder.newPrice.setText(formattedPrice);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int clickedPosition = holder.getAdapterPosition();

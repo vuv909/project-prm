@@ -3,17 +3,25 @@ package com.example.myapplication.models;
 import java.io.Serializable;
 
 public class Category implements Serializable {
+    private int id ;
     private String img ;
-    private String name ;
-    private String type;
+    private String name;
 
     public Category() {
     }
 
-    public Category(String img, String name, String type) {
+    public Category(int id, String img, String name) {
+        this.id = id;
         this.img = img;
         this.name = name;
-        this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getImg() {
@@ -30,13 +38,5 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }
