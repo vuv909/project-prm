@@ -89,10 +89,6 @@ public class LoginActivity extends AppCompatActivity {
                     //login is success
                     if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                         //go to mainactivity
-//                        SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-//                        editor.putString("email", email);
 
                         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
