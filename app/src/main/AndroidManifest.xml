@@ -15,10 +15,12 @@
         <activity
 
             android:name=".activity.ShowAllAcitvity"
+            android:parentActivityName=".activity.HomeActivity"
             android:exported="false" />
         <activity
 
             android:name=".activity.ProductDetailActivity"
+            android:parentActivityName=".activity.ShowAllAcitvity"
             android:exported="false" />
         <activity
 
@@ -44,6 +46,10 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="false" />
+
+
+
+
         <activity
             android:name=".activity.ForgotPasswordActivity"
             android:exported="false" />
