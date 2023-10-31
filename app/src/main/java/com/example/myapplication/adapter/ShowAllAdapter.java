@@ -16,7 +16,9 @@ import com.example.myapplication.R;
 import com.example.myapplication.activity.ProductDetailActivity;
 import com.example.myapplication.models.Product;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHolder> {
     private Context context;
@@ -32,12 +34,22 @@ public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHold
     public ShowAllAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ShowAllAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.showall_row,parent,false));
     }
-
+    NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     @Override
     public void onBindViewHolder(@NonNull ShowAllAdapter.ViewHolder holder, int position) {
         Glide.with(context).load(allModelList.get(position).getImg()).into(holder.img);
-        holder.name.setText(allModelList.get(position).getName());
-        holder.price.setText(String.valueOf(allModelList.get(position).getPrice()));
+        String text = allModelList.get(position).getName();
+        if (text.length() > 50) {
+
+            holder.name.setText(text.substring(0, 50)+"...");
+        } else {
+
+            holder.name.setText(text);
+        }
+
+
+        holder.price.setText(vndFormat.format(allModelList.get(position).getPrice()));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

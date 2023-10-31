@@ -3,6 +3,7 @@ import com.example.myapplication.R;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,13 +27,15 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     Product showAllModel  = null;
 
+    TextView Avai,Het,numberQuantity;
+
     private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         firestore = FirebaseFirestore.getInstance();
 
         //get data product
@@ -50,6 +53,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         buy = findViewById(R.id.buy);
         plus = findViewById(R.id.add_item);
         minus = findViewById(R.id.minus_item);
+        Avai = findViewById(R.id.available);
+        Het = findViewById(R.id.hethang);
+        numberQuantity = findViewById(R.id.numberQuantity);
 
         //product detail
         NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -59,6 +65,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             name.setText(newProduct.getName());
             desc.setText(newProduct.getDescription());
             price.setText(vndFormat.format(newProduct.getPrice()));
+            if(newProduct.getQuantity() > 0){
+                Avai.setVisibility(View.VISIBLE);
+            }else if(newProduct.getQuantity() == 0){
+                Het.setVisibility(View.VISIBLE);
+            }
+            numberQuantity.setText(String.valueOf("Còn "+newProduct.getQuantity()+" sản phẩm trong cửa hàng"));
         }
 
         if (productModel != null) {
@@ -66,6 +78,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             name.setText(productModel.getName());
             desc.setText(productModel.getDescription());
             price.setText(vndFormat.format(productModel.getPrice()));
+            if(productModel.getQuantity() > 0){
+                Avai.setVisibility(View.VISIBLE);
+            }else if(productModel.getQuantity() == 0){
+                Het.setVisibility(View.VISIBLE);
+            }
+            numberQuantity.setText(String.valueOf("Còn "+productModel.getQuantity()+" sản phẩm trong cửa hàng"));
         }
 
         if (showAllModel != null) {
@@ -73,6 +91,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             name.setText(showAllModel.getName());
             desc.setText(showAllModel.getDescription());
             price.setText(vndFormat.format(showAllModel.getPrice()));
+            if(showAllModel.getQuantity() > 0){
+                Avai.setVisibility(View.VISIBLE);
+            }else if(showAllModel.getQuantity() == 0){
+                Het.setVisibility(View.VISIBLE);
+            }
+            numberQuantity.setText(String.valueOf("Còn "+showAllModel.getQuantity()+" sản phẩm trong cửa hàng"));
         }
     }
 }

@@ -1,9 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/menu_item"
-        android:title="Your Menu Item"
+        android:title="gsdf"
+        android:icon="@drawable/iconavatar"
+        app:showAsAction="ifRoom">
 
-         />
-    <!-- Add more menu items if needed -->
+        <menu>
+            <item
+                android:id="@+id/menu_show_profile"
+                android:title="Show Profile" />
+            <item
+                android:id="@+id/menu_watch_order"
+                android:title="Watch Order" />
+            <item
+                android:id="@+id/menu_log_out"
+                android:title="Log Out" />
+        </menu>
+
+    </item>
 </menu>
