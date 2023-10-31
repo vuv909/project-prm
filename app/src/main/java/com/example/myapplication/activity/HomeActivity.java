@@ -1,5 +1,8 @@
 package com.example.myapplication.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -24,9 +27,22 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
-        homeFragment = new HomeFragment();
-        onBindingAction();
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+
+        System.out.println("email "+email);
+        System.out.println("is login "+isLoggedIn);
+        if (!isLoggedIn || email.isEmpty()) {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.home);
+            homeFragment = new HomeFragment();
+            onBindingAction();
+
+
     }
 }
