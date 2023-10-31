@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="pink">#E58EEE</color>
+    <color name="pink">#DB2AED</color>
     <color name="green">#12EE12</color>
     <color name="my_primary">#FF24D3FE</color>
     <color name="my_primary1">#D0E9EF</color>
@@ -11,5 +11,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="delete">#C90422</color>
     <color name="purple">#8692f7</color>
+
 
 </resources>

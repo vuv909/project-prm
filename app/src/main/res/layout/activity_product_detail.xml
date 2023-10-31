@@ -116,6 +116,7 @@
                     android:src="@drawable/cong" />
 
                 <EditText
+
                     android:inputType="number"
                     android:id="@+id/quantity"
                     android:layout_width="50dp"
