@@ -1,6 +1,9 @@
 package com.example.myapplication.activity;
 import com.example.myapplication.R;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -45,10 +48,20 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        bindingview();
-        bindingAction();
+
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String email = prefs.getString("email", "");
+
+        if (!email.isEmpty()) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+        }
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.activity_login);
+            bindingview();
+            bindingAction();
+
     }
 
     void loginUser() {
@@ -76,6 +89,17 @@ public class LoginActivity extends AppCompatActivity {
                     //login is success
                     if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                         //go to mainactivity
+//                        SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+//                        editor.putString("email", email);
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("email", email);
+                        editor.putBoolean("isLoggedIn", true);
+                        editor.apply();
+                        System.out.println("email"+email );
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     } else {
