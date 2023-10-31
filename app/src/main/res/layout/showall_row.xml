@@ -3,17 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_height="320dp"
+    android:layout_marginBottom="30dp"
+    >
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:layout_height="320dp"
+       >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="15dp"
+            android:layout_height="320dp"
+
+
             android:orientation="vertical"
             android:background="#EDEDED">
 
@@ -21,24 +22,31 @@
                 android:id="@+id/item_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <TextView
                 android:textColor="#673AB7"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/amethysta"
                 android:id="@+id/item_cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                 android:gravity="center"
+
+                android:textStyle="bold"
                 android:text="$ 34.0" />
 
             <TextView
                 android:id="@+id/item_nam"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:text="Woman T shirt"
+                android:textSize="25sp"
+                android:textStyle="bold"
                 android:fontFamily="@font/amethysta"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

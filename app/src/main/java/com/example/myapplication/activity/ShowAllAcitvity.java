@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -31,7 +33,7 @@ public class ShowAllAcitvity extends AppCompatActivity {
     private List<Product> showAllModels;
 
     FirebaseFirestore db;
-
+    TextView textName ;
 
     private RecyclerView recyclerViewShowAll;
 
@@ -39,21 +41,25 @@ public class ShowAllAcitvity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_acitvity);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         db = FirebaseFirestore.getInstance();
 
         recyclerViewShowAll = findViewById(R.id.showAll);
+        textName = findViewById(R.id.titleInShowall);
 
         String type = getIntent().getStringExtra("type");
+        String name = getIntent().getStringExtra("name");
 
 
-        recyclerViewShowAll.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerViewShowAll.setLayoutManager(new GridLayoutManager(this, 1));
         showAllModels = new ArrayList<>();
         showAllAdapter = new ShowAllAdapter(this, showAllModels);
         recyclerViewShowAll.setAdapter(showAllAdapter);
 
         if (type != null) {
-            db.collection("Category").whereEqualTo("type", type)
+            textName.setText(name);
+            int typeId = Integer.valueOf(type);
+            db.collection("Product").whereEqualTo("category_id", typeId)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -71,7 +77,7 @@ public class ShowAllAcitvity extends AppCompatActivity {
                     });
         }
         if (type == null) {
-            db.collection("ListProducts")
+            db.collection("Product")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
