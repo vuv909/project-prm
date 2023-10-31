@@ -37,7 +37,7 @@ public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHold
     NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     @Override
     public void onBindViewHolder(@NonNull ShowAllAdapter.ViewHolder holder, int position) {
-        Glide.with(context).load(allModelList.get(position).getImg()).into(holder.img);
+        Glide.with(context).load(allModelList.get(position).getImg()).placeholder(R.drawable.loading).into(holder.img);
         String text = allModelList.get(position).getName();
         if (text.length() > 50) {
 

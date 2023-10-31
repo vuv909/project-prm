@@ -4,9 +4,14 @@
     <item
         android:id="@+id/menu_item"
         android:title="gsdf"
-        android:icon="@drawable/iconavatar"
-        app:showAsAction="ifRoom">
+        app:showAsAction="ifRoom"
+        app:actionLayout="@layout/menu_action_view"/>
 
+    <item
+        android:id="@+id/left_item"
+        android:icon="@drawable/dots"
+        android:title="Menu"
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/menu_show_profile"
@@ -18,6 +23,6 @@
                 android:id="@+id/menu_log_out"
                 android:title="Log Out" />
         </menu>
-
     </item>
+
 </menu>

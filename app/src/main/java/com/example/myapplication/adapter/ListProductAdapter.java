@@ -39,7 +39,7 @@ public class ListProductAdapter extends RecyclerView.Adapter<ListProductAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListProductAdapter.ViewHolder holder, int position) {
-        Glide.with(context).load(listproduct.get(position).getImg()).into(holder.view);
+        Glide.with(context).load(listproduct.get(position).getImg()).placeholder(R.drawable.loading).into(holder.view);
 
         String text = listproduct.get(position).getName();
         if (text.length() > 20) {
