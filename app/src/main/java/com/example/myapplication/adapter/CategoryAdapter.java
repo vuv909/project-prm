@@ -37,7 +37,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
-            Glide.with(context).load(categoryList.get(position).getImg()).placeholder(R.drawable.advert1).into(holder.catImage);
+            Glide.with(context).load(categoryList.get(position).getImg()).placeholder(R.drawable.loading).into(holder.catImage);
             holder.catName.setText(categoryList.get(position).getName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
