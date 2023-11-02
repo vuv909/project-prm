@@ -96,9 +96,9 @@ public class RegisterActivity extends AppCompatActivity {
                                                         int newId = lastId + 1;
 
                                                         // Thêm tài liệu mới vào Firestore
-                                                        user.put("Email", userEmail);
                                                         Map<String, Object> user = new HashMap<>();
-                                                          user.put("id", newId);
+                                                        user.put("Email", userEmail);
+                                                        user.put("id", newId);
                                                         user.put("MobileNumber", userMobileNumber);
                                                         user.put("username", usernameF);
                                                         user.put("avatar", "");
