@@ -22,7 +22,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.logging.Log;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -30,7 +32,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText emailEditText, passwordEditText, confirmPasswordEditText, btnpnb;
+    EditText emailEditText, passwordEditText, confirmPasswordEditText, btnpnb, usernameEditText;
     Button createAccountBtn;
     ProgressBar progressBar;
     TextView loginBtnTextView;
@@ -44,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         loginBtnTextView = findViewById(R.id.login_text_view_btn);
         btnpnb = findViewById(R.id.btnpnb);
+        usernameEditText = findViewById(R.id.username);
         db = FirebaseFirestore.getInstance();
     }
 
@@ -63,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void signUpFilestore(){
         final String userEmail = emailEditText.getText().toString();
         final String userMobileNumber = btnpnb.getText().toString();
+        final String usernameF = usernameEditText.getText().toString();
 
         // Kiểm tra xem email và số điện thoại đã tồn tại trong Firestore chưa
         db.collection("users")
@@ -75,24 +79,38 @@ public class RegisterActivity extends AppCompatActivity {
                             if (emailTask.getResult().isEmpty()) {
                                 // Nếu không có email trùng lặp, tiếp tục kiểm tra số điện thoại
                                 db.collection("users")
-                                        .whereEqualTo("MobileNumber", userMobileNumber)
+                                        .orderBy("id", Query.Direction.DESCENDING)
+                                        .limit(1)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> mobileTask) {
-                                                if (mobileTask.isSuccessful()) {
-                                                    if (mobileTask.getResult().isEmpty()) {
-                                                        // Nếu không có số điện thoại trùng lặp, thêm vào Firestore
-                                                        Map<String, Object> user = new HashMap<>();
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    QuerySnapshot querySnapshot = task.getResult();
+                                                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                                                        // Lấy tài liệu cuối cùng
+                                                        DocumentSnapshot lastDocument = querySnapshot.getDocuments().get(0);
+                                                        int lastId = lastDocument.getLong("id").intValue();
+
+                                                        // Tăng giá trị id
+                                                        int newId = lastId + 1;
+
+                                                        // Thêm tài liệu mới vào Firestore
                                                         user.put("Email", userEmail);
+                                                        Map<String, Object> user = new HashMap<>();
+                                                          user.put("id", newId);
                                                         user.put("MobileNumber", userMobileNumber);
+                                                        user.put("username", usernameF);
+                                                        user.put("avatar", "");
 
                                                         db.collection("users")
                                                                 .add(user)
                                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                                     @Override
                                                                     public void onSuccess(DocumentReference documentReference) {
-//                                                                        Toast.makeText(getApplicationContext(), "Data stored Successfully", Toast.LENGTH_SHORT).show();
+                                                                        // Lấy id của tài liệu vừa được thêm vào
+                                                                        String documentId = documentReference.getId();
+                                                                        // ...
                                                                     }
                                                                 })
                                                                 .addOnFailureListener(new OnFailureListener() {
@@ -101,16 +119,9 @@ public class RegisterActivity extends AppCompatActivity {
                                                                         Toast.makeText(getApplicationContext(), "Error adding document: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 });
-                                                    } else {
-                                                        // Nếu số điện thoại đã tồn tại, hiển thị thông báo
-//                                                        Toast.makeText(getApplicationContext(), "Phone number already exists", Toast.LENGTH_SHORT).show();
-//                                                        startActivity(new Intent(RegisterActivity.this, RegisterActivity.class));
-                                                        btnpnb.setError("Phone Number should be same.");
-                                                        Utility.showToast(RegisterActivity.this,"Phone Number should be same.");
                                                     }
                                                 } else {
-                                                    // Nếu có lỗi khi kiểm tra số điện thoại
-                                                    Toast.makeText(getApplicationContext(), "Error checking phone number: " + mobileTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getApplicationContext(), "Error getting documents: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
