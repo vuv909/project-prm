@@ -155,7 +155,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         if (currentValue > 0) {
             final String subtract = String.valueOf(currentValue - 1);
-
             runOnUiThread(() -> editQuantity.setText(subtract));
         }
     }

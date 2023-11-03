@@ -137,6 +137,12 @@ public class HomeActivity extends AppCompatActivity {
 
             return true;
         }
+        // Luc code them item cart
+        else if (id == R.id.menu_cart){
+            Intent intent = new Intent(this,ViewCartActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -6,7 +6,6 @@ public class Product implements Serializable {
     private  int id;
     private String name ;
     private String img;
-
     private  int quantity;
     private int price;
     private String description;
@@ -19,6 +18,7 @@ public class Product implements Serializable {
         this.name = name;
         this.img = img;
         this.price = price;
+        this.quantity = quantity;
         this.description = description;
         this.category_id = category_id;
     }
