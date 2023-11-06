@@ -1,114 +1,67 @@
 package com.example.myapplication.models;
+import  com.example.myapplication.models.Product;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+public class Order  {
 
-public class Order implements Serializable {
-    private int id;
-    private int product_id;
-    private int user_id;
-    private int total_price;
-    private int product_quantity;
-    private String product_name;
-    private String product_image;
-    private String status;
-    private String address;
-    private Date order_date;
+    private String documentId;
+    private String userId;
+    private Date orderDate;
+    private int totalPrice;
+    private List<Product> productList;
 
     public Order() {
+        // Default constructor required for Firestore's toObject() method
     }
 
-    public Order(int id, int product_id, int user_id, int total_price, int product_quantity, String product_name, String product_image, String status, String address, Date order_date) {
-        this.id = id;
-        this.product_id = product_id;
-        this.user_id = user_id;
-        this.total_price = total_price;
-        this.product_quantity = product_quantity;
-        this.product_name = product_name;
-        this.product_image = product_image;
-        this.status = status;
-        this.address = address;
-        this.order_date = order_date;
+    public Order(String documentId,String userId, Date orderDate, int totalPrice, List<Product> productList) {
+        this.documentId = documentId;
+        this.userId = userId;
+        this.orderDate = orderDate;
+        this.totalPrice = totalPrice;
+        this.productList = productList;
     }
 
-    public int getProduct_quantity() {
-        return product_quantity;
+    public String getDocumentId() {
+        return documentId;
     }
 
-    public void setProduct_quantity(int product_quantity) {
-        this.product_quantity = product_quantity;
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
-    public String getProduct_image() {
-        return product_image;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setProduct_image(String product_image) {
-        this.product_image = product_image;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public int getId() {
-        return id;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public List<Product> getProductList() {
+        return productList;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public int getTotal_price() {
-        return total_price;
-    }
-
-    public void setTotal_price(int total_price) {
-        this.total_price = total_price;
-    }
-
-    public String getProduct_name() {
-        return product_name;
-    }
-
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Date getOrder_date() {
-        return order_date;
-    }
-
-    public void setOrder_date(Date order_date) {
-        this.order_date = order_date;
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 }

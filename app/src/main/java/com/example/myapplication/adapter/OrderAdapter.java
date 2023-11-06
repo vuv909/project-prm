@@ -39,21 +39,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order p = orderItems.get(position);
         String temp = "";
-        Glide.with(context)
-                .load(p.getProduct_image())
-                .placeholder(R.drawable.loading)
-                .into(holder.imv_pro);
-        holder.tv_pro_name.setText(p.getProduct_name());
 
-        temp = "x"+ p.getProduct_quantity();
-        holder.tv_quantity.setText(temp);
+        holder.tv_pro_name.setText(p.getDocumentId());
 
-        temp = "Thành Tiền:" + p.getTotal_price();
-        holder.tv_order_price.setText(temp);
-        holder.tv_order_status.setText(p.getStatus());
+
+        holder.tv_order_price.setText(String.valueOf(p.getTotalPrice()));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String date = "Ngày đặt hàng: " + dateFormat.format(p.getOrder_date());
+        String date = "Ngày đặt hàng: " + dateFormat.format(p.getOrderDate());
         holder.tv_date.setText(date);
     }
 
