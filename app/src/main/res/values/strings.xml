@@ -1,11 +1,3 @@
 <resources>
-    <string name="app_name">PetShop</string>
-
-    <string name="first_slide">Choose yout product</string>
-    <string name="second_slide">Fast delivery</string>
-    <string name="third_slide">Good service</string>
-
-    <string name="description">The Ultimate Guide to Organic Dog Food: Everything You Need to Know. EcoPetNeeds Is Your Trusted Source for Eco-Friendly Pet Products. Organic Pet Products. Natural Pet Grooming.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Hola Pet</string>
 </resources>
