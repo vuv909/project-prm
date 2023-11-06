@@ -28,7 +28,6 @@ public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHold
         this.context = context;
         this.allModelList = allModelList;
     }
-
     @NonNull
     @Override
     public ShowAllAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

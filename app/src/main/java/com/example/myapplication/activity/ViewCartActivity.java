@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.models.Cart;
+import com.example.myapplication.models.Order;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,13 +22,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewCartActivity extends AppCompatActivity {
 
     // Init UI variable
     RecyclerView rcv_carts;
     Button btn_pay;
-    TextView tv_total_price;
+    static TextView tv_total_price;
 
     // Init adapter & firebase
     CartAdapter cartAdapter;
@@ -35,19 +37,21 @@ public class ViewCartActivity extends AppCompatActivity {
     FirebaseFirestore db;
 
     // Init temp variable
-    private int total_pay = 0;
+    public static int total_pay = 0;
+    public static List<Order> listOrder = new ArrayList<>();
 
     private void bindingView() {
         rcv_carts = findViewById(R.id.rcv_cart);
-        btn_pay = findViewById(R.id.btn_pay);
+        btn_pay = findViewById(R.id.btn_datHang);
         tv_total_price = findViewById(R.id.tv_total_price);
-
     }
 
     private void bindingAction() {
         btn_pay.setOnClickListener(this::onClickButtonPay);
     }
-
+    public  static  void setTotal_pay(int total){
+        tv_total_price.setText(Integer.toString(total_pay));
+    }
     private void process() {
         rcv_carts.setLayoutManager(new GridLayoutManager(this, 1));
         cartArrayList = new ArrayList<>();
@@ -70,14 +74,16 @@ public class ViewCartActivity extends AppCompatActivity {
                         }
                     }
                 });
-        for (Cart c : cartArrayList) {
-            total_pay += c.getPrice() * c.getQuantity();
-        }
-        tv_total_price.setText(Integer.toString(total_pay));
+//        for (Cart c : cartArrayList) {
+//            total_pay += c.getPrice() * c.getQuantity();
+//        }
+//        tv_total_price.setText(Integer.toString(total_pay));
     }
 
     private void onClickButtonPay(View view) {
-
+        // Add list order to firebase
+        String x = listOrder.get(1).getProduct_name();
+        Toast.makeText(this, x, Toast.LENGTH_SHORT).show();
     }
 
     @Override
