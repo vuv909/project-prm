@@ -20,18 +20,18 @@
        android:id="@+id/showAll"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
+
    <TextView
        android:id="@+id/not_found"
-       android:layout_marginTop="30dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:text="Không tồn tại kết quả bạn vừa tìm kiếm !!!"
-       android:textSize="40sp"
-       android:textColor="@color/delete"
-       android:gravity="center"
        android:layout_gravity="center"
+       android:layout_marginTop="30dp"
+       android:gravity="center"
+       android:text="Không tồn tại kết quả bạn vừa tìm kiếm !!!"
+       android:textColor="@color/delete"
+       android:textSize="40sp"
        android:textStyle="bold"
-       android:visibility="invisible"
-   />
+       android:visibility="invisible" />
 
 </LinearLayout>
