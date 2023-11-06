@@ -14,11 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.models.Cart;
+import com.google.gson.Gson;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     private Context context;
+    Gson gson;
     private ArrayList<Cart> cartItems;
     public CartAdapter(Context context, ArrayList<Cart> cartItems) {
         this.context = context;
@@ -35,8 +39,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Cart p = cartItems.get(position);
         Glide.with(context)
                 .load(cartItems.get(position).getImage_product()).placeholder(R.drawable.loading).into(holder.img_pro);
-        holder.tv_name.setText(p.getProduct_name());
-        holder.tv_price.setText(Integer.toString(p.getPrice()));
+        String productName = p.getProduct_name();
+        if (productName.length() > 20) {
+            productName = productName.substring(0, 30) + "...";
+        }
+        holder.tv_name.setText(productName);
+
+        int priceInVND = p.getPrice();
+        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        holder.tv_price.setText(vndFormat.format(priceInVND));
         holder.edt_quantity.setText(Integer.toString(p.getQuantity()));
     }
 
@@ -50,7 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         ImageView img_pro;
         TextView tv_name;
         TextView tv_price;
-        EditText edt_quantity;
+        TextView edt_quantity;
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
             img_pro = itemView.findViewById(R.id.pro_img);

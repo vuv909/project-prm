@@ -121,7 +121,7 @@
                     android:id="@+id/quantity"
                     android:layout_width="50dp"
                     android:layout_height="60dp"
-                    android:text="12"
+                    android:text="1"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
@@ -145,7 +145,7 @@
             <TextView
                 android:id="@+id/hethang"
                 android:visibility="invisible"
-                android:text="Tình trạng : còn hàng "
+                android:text="Tình trạng : hết hàng "
                 android:textStyle="bold"
                 android:textColor="@color/delete"
                 android:layout_width="wrap_content"
@@ -189,6 +189,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_to_cart"
         app:layout_constraintVertical_bias="0.19"
+        app:layout_constraintWidth_percent=".8" />
+
+
+    <Button
+        android:id="@+id/sold_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:text="Sold out"
+        android:backgroundTint="@color/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_to_cart"
+        app:layout_constraintVertical_bias="0.19"
+        android:visibility="invisible"
         app:layout_constraintWidth_percent=".8" />
 
     <TextView

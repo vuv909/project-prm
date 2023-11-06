@@ -13,7 +13,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_cart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,12 +28,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/white"
                 android:text="Tổng Tiền: "
+                android:textStyle="bold"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_total_price"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -40,22 +46,13 @@
                 android:text="100.000"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tv_VND"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@+id/tv_total_price"
-                android:text="VNĐ"
-                android:textSize="20sp" />
-
             <Button
                 android:id="@+id/btn_pay"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/black"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/rectangle_button"
+
                 android:text="Đặt Hàng"/>
         </RelativeLayout>
     </RelativeLayout>

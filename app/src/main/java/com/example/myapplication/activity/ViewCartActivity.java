@@ -20,7 +20,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 public class ViewCartActivity extends AppCompatActivity {
 
@@ -63,18 +66,21 @@ public class ViewCartActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Cart cart = document.toObject(Cart.class);
                                 cartArrayList.add(cart);
+
+                                total_pay += cart.getPrice() * cart.getQuantity();
                                 cartAdapter.notifyDataSetChanged();
                             }
+                            NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                            vndFormat.setCurrency(Currency.getInstance("VND"));
+                            String total_pay_vnd = vndFormat.format(total_pay);
+                            tv_total_price.setText(total_pay_vnd);
                         } else {
                             Toast.makeText(ViewCartActivity.this, "error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        for (Cart c : cartArrayList) {
-            total_pay += c.getPrice() * c.getQuantity();
-        }
-        tv_total_price.setText(Integer.toString(total_pay));
     }
+
 
     private void onClickButtonPay(View view) {
 
