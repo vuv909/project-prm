@@ -109,12 +109,12 @@ public class HomeFragment extends Fragment {
         linearLayout.setVisibility(View.GONE);
 
         //image slider
-        ImageSlider imageSlider = root.findViewById(R.id.image_slider);
-        List<SlideModel> slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel(R.drawable.advert1,"Discount on Pet Shop", ScaleTypes.CENTER_CROP));
-        slideModels.add(new SlideModel(R.drawable.advert2,"Discount new people",ScaleTypes.CENTER_CROP));
-        slideModels.add(new SlideModel(R.drawable.advert3,"50%",ScaleTypes.CENTER_CROP));
-        imageSlider.setImageList(slideModels);
+//        ImageSlider imageSlider = root.findViewById(R.id.image_slider);
+//        List<SlideModel> slideModels = new ArrayList<>();
+//        slideModels.add(new SlideModel(R.drawable.advert1,"Discount on Pet Shop", ScaleTypes.CENTER_CROP));
+//        slideModels.add(new SlideModel(R.drawable.advert2,"Discount new people",ScaleTypes.CENTER_CROP));
+//        slideModels.add(new SlideModel(R.drawable.advert3,"50%",ScaleTypes.CENTER_CROP));
+//        imageSlider.setImageList(slideModels);
 
         progressDialog.setTitle("Chao mung ban tro lai !!!");
         progressDialog.setMessage("please wait ...");
