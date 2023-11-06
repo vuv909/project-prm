@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +62,9 @@ public class HomeFragment extends Fragment {
     //
     FirebaseFirestore db ;
 
+    EditText textSearch;
+    Button searchAction;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -81,6 +86,22 @@ public class HomeFragment extends Fragment {
 
         newProShowall = root.findViewById(R.id.newProducts_see_all);
         listProductShowall = root.findViewById(R.id.popular_see_all);
+        textSearch = root.findViewById(R.id.input_search);
+        searchAction = root.findViewById(R.id.search_action);
+
+        searchAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(textSearch.getText().toString().trim().equals("")) {
+                    Toast.makeText(getContext(), "Vui lòng không bỏ trống trường tìm kiếm !!!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent = new Intent(getContext(),ShowAllAcitvity.class);
+                    intent.putExtra("textSearch", textSearch.getText().toString().trim());
+                    startActivity(intent);
+                }
+                }
+        });
 
 
         newProShowall.setOnClickListener(new View.OnClickListener() {
@@ -108,13 +129,7 @@ public class HomeFragment extends Fragment {
         linearLayout = root.findViewById(R.id.home_layout);
         linearLayout.setVisibility(View.GONE);
 
-        //image slider
-//        ImageSlider imageSlider = root.findViewById(R.id.image_slider);
-//        List<SlideModel> slideModels = new ArrayList<>();
-//        slideModels.add(new SlideModel(R.drawable.advert1,"Discount on Pet Shop", ScaleTypes.CENTER_CROP));
-//        slideModels.add(new SlideModel(R.drawable.advert2,"Discount new people",ScaleTypes.CENTER_CROP));
-//        slideModels.add(new SlideModel(R.drawable.advert3,"50%",ScaleTypes.CENTER_CROP));
-//        imageSlider.setImageList(slideModels);
+
 
         progressDialog.setTitle("Chao mung ban tro lai !!!");
         progressDialog.setMessage("please wait ...");
