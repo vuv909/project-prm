@@ -15,9 +15,15 @@
         android:theme="@style/Theme.PetShop"
         tools:targetApi="31">
         <activity
-            android:name=".activity.EditProfile"
-            android:parentActivityName=".activity.Profile"
+            android:name=".activity.OrderActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.ViewCartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.EditProfile"
+            android:exported="false"
+            android:parentActivityName=".activity.Profile" />
         <activity
             android:name=".activity.Profile"
             android:exported="false"

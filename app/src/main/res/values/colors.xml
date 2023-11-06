@@ -11,6 +11,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="delete">#C90422</color>
     <color name="purple">#8692f7</color>
-
-
+    <color name="gray">#808080</color>
+    <color name="orange_light">#F16F0D</color>
 </resources>

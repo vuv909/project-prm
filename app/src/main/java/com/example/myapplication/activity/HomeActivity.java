@@ -124,8 +124,10 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.menu_watch_order) {
-            Toast.makeText(this, "Watch Order selected", Toast.LENGTH_SHORT).show();
-            return true;
+            Intent intent = new Intent(this,OrderActivity.class);
+            startActivity(intent);
+            // Toast.makeText(this, "Watch Order selected", Toast.LENGTH_SHORT).show();
+            //return true;
         } else if (id == R.id.menu_log_out) {
             sharePreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharePreferences.edit();
@@ -137,12 +139,12 @@ public class HomeActivity extends AppCompatActivity {
 
             return true;
         }
+        // Luc code them item cart
+        else if (id == R.id.menu_cart){
+            Intent intent = new Intent(this,ViewCartActivity.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
 }
