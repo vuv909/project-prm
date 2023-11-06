@@ -29,13 +29,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 public class HomeActivity extends AppCompatActivity {
     SharedPreferences sharePreferences;
     Fragment homeFragment;
+    FirebaseFirestore firestore;
     private void onBindingAction(){
         loadFragment(homeFragment);
     }
+
 
     private void loadFragment(Fragment homeFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -45,17 +48,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
-        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
-        System.out.println("email "+email);
-        System.out.println("is login "+isLoggedIn);
-        if (!isLoggedIn || email.isEmpty()) {
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
             super.onCreate(savedInstanceState);
             setContentView(R.layout.home);
             homeFragment = new HomeFragment();
@@ -68,21 +61,23 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.nav_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_item);
-
-        // Set the action view of the menu item
+       firestore = FirebaseFirestore.getInstance();
         menuItem.setActionView(R.layout.menu_action_view);
 
-        // Retrieve the action view
         View actionView = menuItem.getActionView();
+        ImageView imageView = actionView.findViewById(R.id.image_view_in_menu);
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        final User[] userModel = new User[1];
+        Gson gson = new Gson();
 
-        sharePreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String email = sharePreferences.getString("email", "");
-        if (!email.isEmpty()) {
-            //handle async
-            firestore.collection("users").whereEqualTo("Email", email.trim())
+        // Retrieve user data from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String userData = sharedPreferences.getString("user", null);
+
+        if (userData != null) {
+            // Deserialize the user data
+            User user = gson.fromJson(userData, User.class);
+
+            firestore.collection("users").whereEqualTo("Email", user.getEmail().trim())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -90,14 +85,12 @@ public class HomeActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     User user = document.toObject(User.class);
-                                    userModel[0] = user;
-
                                     // Update UI or perform actions with the user data here
-                                    if (userModel[0] != null) {
+                                    if (user != null) {
                                         // Display the user
                                         ImageView imageView = actionView.findViewById(R.id.image_view_in_menu);
                                         Glide.with(HomeActivity.this)
-                                                .load(userModel[0].getAvatar())
+                                                .load(user.getAvatar())
                                                 .placeholder(R.drawable.iconavatar)
                                                 .into(imageView);
                                     }
@@ -108,12 +101,14 @@ public class HomeActivity extends AppCompatActivity {
                         }
                     });
 
-
-
-            return true;
+        } else {
+            // Handle the case where user data is not available in SharedPreferences
+            // You can show a default image or handle the situation as needed
         }
+
         return true;
     }
+
 
 
     @Override

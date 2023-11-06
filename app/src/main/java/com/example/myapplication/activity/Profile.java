@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 public class Profile extends AppCompatActivity {
     SharedPreferences sharedPreferences;
@@ -31,6 +32,7 @@ public class Profile extends AppCompatActivity {
     FirebaseFirestore db ;
     String email;
     Button edit;
+    Gson gson;
 
     User userModel;
     @Override
@@ -48,10 +50,13 @@ public class Profile extends AppCompatActivity {
         edit.setOnClickListener(this::handleClick);
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        email = sharedPreferences.getString("email","");
-        if(!email.isEmpty()){
+        String data = sharedPreferences.getString("user",null);
+        if(!data.isEmpty()){
             //handle async
-            db.collection("users").whereEqualTo("Email", email.trim())
+            gson = new Gson();
+            userModel = new User();
+            userModel = gson.fromJson(data,User.class);
+            db.collection("users").whereEqualTo("Email", userModel.getEmail().trim())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
