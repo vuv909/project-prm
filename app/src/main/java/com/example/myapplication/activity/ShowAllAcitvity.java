@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,8 @@ public class ShowAllAcitvity extends AppCompatActivity {
     FirebaseFirestore db;
     TextView textName ;
 
+    TextView notFound ;
+
     private RecyclerView recyclerViewShowAll;
 
     @Override
@@ -46,15 +49,50 @@ public class ShowAllAcitvity extends AppCompatActivity {
 
         recyclerViewShowAll = findViewById(R.id.showAll);
         textName = findViewById(R.id.titleInShowall);
-
+        notFound = findViewById(R.id.not_found);
         String type = getIntent().getStringExtra("type");
         String name = getIntent().getStringExtra("name");
+        String textSearch  =  getIntent().getStringExtra("textSearch");
 
 
         recyclerViewShowAll.setLayoutManager(new GridLayoutManager(this, 1));
         showAllModels = new ArrayList<>();
         showAllAdapter = new ShowAllAdapter(this, showAllModels);
         recyclerViewShowAll.setAdapter(showAllAdapter);
+
+        if (textSearch != null) {
+
+            textName.setText("Kết quả cho '" + textSearch + "'");
+            final String searchTextLower = textSearch.toLowerCase(); // Convert search text to lowercase
+
+            db.collection("Product")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                boolean foundMatch = false;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Product productNew = document.toObject(Product.class);
+                                    String productName = productNew.getName();
+
+                                    // Check if the lowercase product name contains the lowercase search text
+                                    if (productName != null && productName.toLowerCase().contains(searchTextLower)) {
+                                        showAllModels.add(productNew);
+                                        showAllAdapter.notifyDataSetChanged();
+                                        foundMatch = true;
+                                    }
+                                }
+                                if(!foundMatch){
+                                    notFound.setVisibility(View.VISIBLE);
+                                }
+                            } else {
+                                Toast.makeText(ShowAllAcitvity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+
 
         if (type != null) {
             textName.setText(name);
@@ -76,7 +114,7 @@ public class ShowAllAcitvity extends AppCompatActivity {
                         }
                     });
         }
-        if (type == null) {
+        if (type == null && textSearch == null) {
             db.collection("Product")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -95,6 +133,7 @@ public class ShowAllAcitvity extends AppCompatActivity {
                     });
 
         }
+
     }
 
 

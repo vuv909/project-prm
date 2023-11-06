@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -102,12 +103,13 @@ public class HomeActivity extends AppCompatActivity {
                                     }
                                 }
                             } else {
-                                // Handle the case when the task is not successful
+
                             }
                         }
                     });
 
-            // You might not need to set an icon since the actionLayout will handle the image display
+
+
             return true;
         }
         return true;
