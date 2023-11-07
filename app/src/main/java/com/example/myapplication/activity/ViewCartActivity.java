@@ -46,6 +46,7 @@ import java.util.Map;
 public class ViewCartActivity extends AppCompatActivity {
 
     // Init UI variable
+    Gson gson;
     RecyclerView rcv_carts;
     Button btn_pay;
     TextView tv_total_price;
@@ -78,32 +79,40 @@ public class ViewCartActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         cartAdapter = new CartAdapter(this, cartArrayList);
         rcv_carts.setAdapter(cartAdapter);
-        db.collection("Carts").whereEqualTo("user_id", 1)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Cart cart = document.toObject(Cart.class);
-                                cartArrayList.add(cart);
+        Gson gson = new Gson();
 
-                                total_pay += cart.getPrice() * cart.getQuantity();
-                                cartAdapter.notifyDataSetChanged();
+        // Retrieve user data from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String userData = sharedPreferences.getString("user", null);
+
+        if (userData != null) {
+            User user = gson.fromJson(userData, User.class);
+            db.collection("Carts").whereEqualTo("user_id", user.getId())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Cart cart = document.toObject(Cart.class);
+                                    cartArrayList.add(cart);
+
+                                    total_pay += cart.getPrice() * cart.getQuantity();
+                                    cartAdapter.notifyDataSetChanged();
+                                }
+                                if (cartArrayList.isEmpty()) {
+                                    notExist.setVisibility(View.VISIBLE);
+                                }
+                                NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                                vndFormat.setCurrency(Currency.getInstance("VND"));
+                                String total_pay_vnd = vndFormat.format(total_pay);
+                                tv_total_price.setText(total_pay_vnd);
+                            } else {
+                                Toast.makeText(ViewCartActivity.this, "error", Toast.LENGTH_SHORT).show();
                             }
-                            if (cartArrayList.isEmpty()) {
-                                notExist.setVisibility(View.VISIBLE);
-                            }
-                            NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-                            vndFormat.setCurrency(Currency.getInstance("VND"));
-                            String total_pay_vnd = vndFormat.format(total_pay);
-                            tv_total_price.setText(total_pay_vnd);
-                        } else {
-                            Toast.makeText(ViewCartActivity.this, "error", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
-
+                    });
+        }
     }
 
     private void handleSaveOrder(View view) {

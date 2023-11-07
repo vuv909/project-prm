@@ -17,6 +17,7 @@ import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.adapter.OrderAdapter;
 import com.example.myapplication.models.Cart;
 import com.example.myapplication.models.Order;
+import com.example.myapplication.models.ProOrder;
 import com.example.myapplication.models.Product;
 import com.example.myapplication.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,7 +63,7 @@ public class OrderActivity extends AppCompatActivity {
             // Deserialize the user data
             User user = gson.fromJson(userData, User.class);
 
-            db.collection("orders").whereEqualTo("user_id", String.valueOf(user.getId()))
+            db.collection("orders").whereEqualTo("userId", String.valueOf(user.getId()))
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -73,26 +74,31 @@ public class OrderActivity extends AppCompatActivity {
                                     Order o = document.toObject(Order.class);
                                     o.setDocumentId(orderId);  // Set the document ID in your Order object
 
-                                    // Retrieve the product data
+                                    // Retrieve the orderDate
+                                    String orderDate = document.getString("orderDate");
+                                    o.setOrderDate(orderDate);  // Set the orderDate in your Order object
+
+                                    // Retrieve the productList
                                     ArrayList<Map<String, Object>> productList = (ArrayList<Map<String, Object>>) document.get("productList");
                                     if (productList != null && !productList.isEmpty()) {
-                                        Map<String, Object> productData = productList.get(0);
-                                        String imageProduct = (String) productData.get("image_product");
-                                        int price = ((Number) productData.get("price")).intValue();
-                                        int productId = ((Number) productData.get("product_id")).intValue();
-                                        String productName = (String) productData.get("product_name");
-                                        int quantity = ((Number) productData.get("quantity")).intValue();
+                                        for (Map<String, Object> productData : productList) {
+                                            String imageProduct = (String) productData.get("image_product");
+                                            int price = ((Number) productData.get("price")).intValue();
+                                            int productId = ((Number) productData.get("product_id")).intValue();
+                                            String productName = (String) productData.get("product_name");
+                                            int quantity = ((Number) productData.get("quantity")).intValue();
 
-                                        // Create a Cart object with the retrieved data
-//                                        Product product = new Product(productId,productName,imageProduct,price,quantity);
-////                                        o.se(cart);
+                                            // Create a Product object with the retrieved data
+                                            ProOrder product = new ProOrder(String.valueOf(productId), productName, imageProduct, price, quantity);
+                                            o.addProduct(product);
+                                        }
                                     }
 
                                     orderArrayList.add(o);
                                     orderAdapter.notifyDataSetChanged();
                                 }
                                 if (!orderArrayList.isEmpty()) {
-                                    Toast.makeText(OrderActivity.this, "Order exist", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OrderActivity.this, "Order exists", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 Toast.makeText(OrderActivity.this, "Error", Toast.LENGTH_SHORT).show();
@@ -100,7 +106,7 @@ public class OrderActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(this, "Not found user !!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
         }
     }
     private void bindingAction() {

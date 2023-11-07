@@ -9,16 +9,15 @@ public class Order  {
 
     private String documentId;
     private String userId;
-    private Date orderDate;
+    private String  orderDate;
     private int totalPrice;
-    private List<Product> productList;
+    private List<ProOrder> productList;
 
     public Order() {
         // Default constructor required for Firestore's toObject() method
     }
 
-    public Order(String documentId,String userId, Date orderDate, int totalPrice, List<Product> productList) {
-        this.documentId = documentId;
+    public Order(String userId, String  orderDate, int totalPrice, List<ProOrder> productList) {
         this.userId = userId;
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
@@ -41,11 +40,11 @@ public class Order  {
         this.userId = userId;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String  orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -57,11 +56,14 @@ public class Order  {
         this.totalPrice = totalPrice;
     }
 
-    public List<Product> getProductList() {
+    public List<ProOrder> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
+    public void setProductList(List<ProOrder> productList) {
         this.productList = productList;
+    }
+    public void addProduct(ProOrder pro) {
+        productList.add(pro);
     }
 }
