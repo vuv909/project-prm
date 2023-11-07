@@ -1,24 +1,18 @@
 package com.example.myapplication.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.adapter.OrderAdapter;
-import com.example.myapplication.models.Cart;
-import com.example.myapplication.models.Order;
 import com.example.myapplication.models.ProOrder;
-import com.example.myapplication.models.Product;
 import com.example.myapplication.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,34 +22,41 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class OrderActivity extends AppCompatActivity {
 
-    // Init UI variable
-    RecyclerView rcv_order;
+    // UI variables
+    private RecyclerView rcvOrder;
 
-    Gson gson;
+    // Adapter and Firestore
+    private OrderAdapter orderAdapter;
+    private ArrayList<ProOrder> orderArrayList;
+    private FirebaseFirestore db;
 
-    // Init adapter & firebase
-    OrderAdapter orderAdapter;
-    ArrayList<Order> orderArrayList;
-    FirebaseFirestore db;
+    // Gson for JSON handling
+    private Gson gson;
 
-    // Init temp variable
-    private int total_pay = 0;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_order);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Initialize UI elements
+        rcvOrder = findViewById(R.id.rcv_order);
+        rcvOrder.setLayoutManager(new GridLayoutManager(this, 1));
 
-    private void bindingView() {
-        rcv_order = findViewById(R.id.rcv_order);
-    }
-    private void process() {
-        rcv_order.setLayoutManager(new GridLayoutManager(this, 1));
-        orderArrayList = new ArrayList<>();
+        // Initialize Firestore
         db = FirebaseFirestore.getInstance();
-        orderAdapter = new OrderAdapter(this, orderArrayList);
-        rcv_order.setAdapter(orderAdapter);
+
+        // Initialize Gson
         gson = new Gson();
 
+        // Initialize the orderArrayList and orderAdapter
+        orderArrayList = new ArrayList<>();
+        orderAdapter = new OrderAdapter(this, orderArrayList);
+        rcvOrder.setAdapter(orderAdapter);
+
+        // Load user data from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String userData = sharedPreferences.getString("user", null);
 
@@ -63,6 +64,7 @@ public class OrderActivity extends AppCompatActivity {
             // Deserialize the user data
             User user = gson.fromJson(userData, User.class);
 
+            // Query Firestore for orders
             db.collection("orders").whereEqualTo("userId", String.valueOf(user.getId()))
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -70,38 +72,14 @@ public class OrderActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String orderId = document.getId();  // Retrieve the document ID
-                                    Order o = document.toObject(Order.class);
-                                    o.setDocumentId(orderId);  // Set the document ID in your Order object
-
-                                    // Retrieve the orderDate
-                                    String orderDate = document.getString("orderDate");
-                                    o.setOrderDate(orderDate);  // Set the orderDate in your Order object
-
-                                    // Retrieve the productList
-                                    ArrayList<Map<String, Object>> productList = (ArrayList<Map<String, Object>>) document.get("productList");
-                                    if (productList != null && !productList.isEmpty()) {
-                                        for (Map<String, Object> productData : productList) {
-                                            String imageProduct = (String) productData.get("image_product");
-                                            int price = ((Number) productData.get("price")).intValue();
-                                            int productId = ((Number) productData.get("product_id")).intValue();
-                                            String productName = (String) productData.get("product_name");
-                                            int quantity = ((Number) productData.get("quantity")).intValue();
-
-                                            // Create a Product object with the retrieved data
-                                            ProOrder product = new ProOrder(String.valueOf(productId), productName, imageProduct, price, quantity);
-                                            o.addProduct(product);
-                                        }
-                                    }
-
-                                    orderArrayList.add(o);
-                                    orderAdapter.notifyDataSetChanged();
+                                    ProOrder proOrder = document.toObject(ProOrder.class);
+                                    orderArrayList.add(proOrder);
                                 }
+                                orderAdapter.notifyDataSetChanged(); // Notify the adapter of data changes
+
                                 if (!orderArrayList.isEmpty()) {
                                     Toast.makeText(OrderActivity.this, "Order exists", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(OrderActivity.this, "Error", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -109,18 +87,4 @@ public class OrderActivity extends AppCompatActivity {
             Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
         }
     }
-    private void bindingAction() {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
-        bindingView();
-        process();
-        bindingAction();
-    }
-
-
 }

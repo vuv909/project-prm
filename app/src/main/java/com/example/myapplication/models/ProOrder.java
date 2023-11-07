@@ -1,59 +1,49 @@
 package com.example.myapplication.models;
 
 public class ProOrder {
-    private String productId;
-    private String productName;
-    private String imageProduct;
-    private int price;
-    private int quantity;
+    private String orderDate;
+    private int totalPrice;
+    private String userId;
+    private int totalProduct;
 
     public ProOrder() {}
 
-    public ProOrder(String productId, String productName, String imageProduct, int price, int quantity) {
-        this.productId = productId;
-        this.productName = productName;
-        this.imageProduct = imageProduct;
-        this.price = price;
-        this.quantity = quantity;
+    public ProOrder(String orderDate, int totalPrice, String userId, int totalProduct) {
+        this.orderDate = orderDate;
+        this.totalPrice = totalPrice;
+        this.userId = userId;
+        this.totalProduct = totalProduct;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getOrderDate() {
+        return orderDate;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public String getProductName() {
-        return productName;
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public String getImageProduct() {
-        return imageProduct;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setImageProduct(String imageProduct) {
-        this.imageProduct = imageProduct;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public int getPrice() {
-        return price;
+    public int getTotalProduct() {
+        return totalProduct;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTotalProduct(int totalProduct) {
+        this.totalProduct = totalProduct;
     }
 }

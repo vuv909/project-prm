@@ -3,61 +3,88 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginBottom="5dp"
+    android:layout_margin="10dp"
     >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/imv_pro"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/advert1"
-            android:scaleType="fitCenter"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/imv_pro">
+            >
 
-            <TextView
-                android:id="@+id/tv_pro_name"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ten San pham"
-                />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_pro_quantity"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian đặt hàng :"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/delete"
+                    />
+                <TextView
+                    android:id="@+id/order_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2023/21/12"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantity"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_order_price"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số lượng sản phẩm :"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_marginRight="5dp"
+                    />
+                <TextView
+                    android:id="@+id/order_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2023/21/12"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cần Thanh Toán"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_order_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng số tiền :"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_marginRight="5dp"
+                    />
+                <TextView
+                    android:id="@+id/order_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123"
+                    android:textStyle="bold"
+                    />
 
-            <TextView
-                android:id="@+id/tv_date"
-                android:text="20/10/2000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
+            </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
-
-
-
 </androidx.cardview.widget.CardView>

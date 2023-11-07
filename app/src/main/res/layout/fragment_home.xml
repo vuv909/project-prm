@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="9dp"
                         android:fontFamily="@font/amethysta"
-                        android:text="Sản phẩm bán chạy"
+                        android:text="Các sản phẩm nổi bật"
                         android:textSize="21sp"
                         android:textStyle="bold" />
                    <TextView

@@ -16,9 +16,11 @@
         tools:targetApi="31">
         <activity
             android:name=".activity.OrderActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ViewCartActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".activity.EditProfile"
