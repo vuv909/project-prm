@@ -15,19 +15,18 @@
         <menu>
             <item
                 android:id="@+id/menu_show_profile"
-                android:title="Show Profile" />
+                android:title="Xem hồ sơ" />
             <item
                 android:id="@+id/menu_watch_order"
-                android:title="Watch Order" />
-            <item
-                android:id="@+id/menu_log_out"
-                android:title="Log Out" />
-
+                android:title="Xem lịch sử đặt hàng" />
             <item
                 android:id="@+id/menu_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:title="Cart" />
+                android:title="Giỏ hàng" />
+            <item
+                android:id="@+id/menu_log_out"
+                android:title="Đăng xuất" />
         </menu>
     </item>
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -73,6 +74,7 @@ public class ViewCartActivity extends AppCompatActivity {
     }
 
     private void process() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TextView notExist = findViewById(R.id.cart_notfound);
         rcv_carts.setLayoutManager(new GridLayoutManager(this, 1));
         cartArrayList = new ArrayList<>();
@@ -87,6 +89,7 @@ public class ViewCartActivity extends AppCompatActivity {
 
         if (userData != null) {
             User user = gson.fromJson(userData, User.class);
+
             db.collection("Carts").whereEqualTo("user_id", user.getId())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -127,13 +130,13 @@ public class ViewCartActivity extends AppCompatActivity {
         if (userData != null) {
             User user = gson.fromJson(userData, User.class);
             String userId = String.valueOf(user.getId());
-
+            if(total_pay > 0){
             // Create a map to store the order data
             Map<String, Object> orderData = new HashMap<>();
             orderData.put("userId", userId);
             orderData.put("orderDate", formattedDateTime);
             orderData.put("totalPrice", total_pay);
-            orderData.put("productList", cartArrayList);
+            orderData.put("totalProduct", cartArrayList.size());
 
             // Add the order data to the Firestore collection
             db.collection("orders")
@@ -153,7 +156,7 @@ public class ViewCartActivity extends AppCompatActivity {
                                             }
 
                                             Toast.makeText(ViewCartActivity.this, "Order saved successfully", Toast.LENGTH_SHORT).show();
-                                            finish();
+                                            startActivity(new Intent(ViewCartActivity.this,OrderActivity.class));
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -170,6 +173,9 @@ public class ViewCartActivity extends AppCompatActivity {
                             Toast.makeText(ViewCartActivity.this, "Failed to save order", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+        }}else{
+            Toast.makeText(this, "Có lỗi khi tiến hành đặt hàng !!!", Toast.LENGTH_SHORT).show();
         }
     }
 
